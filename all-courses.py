@@ -91,7 +91,7 @@ class UGPageSpider(scrapy.Spider):
         self.custom_logger.setLevel(logging.DEBUG)
 
         # Create handlers
-        file_handler = logging.FileHandler("my_spider_log.txt")
+        file_handler = logging.FileHandler("spider_log.txt")
         console_handler = logging.StreamHandler()
 
         # Set logging format

@@ -15,15 +15,27 @@ def parse_requirements(req_str):
         # We'll separate parentheses, semicolons, and the word "or" as special tokens.
         # Everything else is considered part of a requirement phrase.
         # A regex approach: split tokens around ( ), ;, and "or" but keep them
-        tokens = []
         pattern = r'(\(|\)|;|\bor\b)'
-        # Split by these tokens, but keep the delimiters by using a capturing group
         parts = re.split(pattern, req_str)
-        # Clean up whitespace and empty tokens
+
+        tokens = []
+        course_pattern = re.compile(r'[A-Za-z]{1,4}\s?\d{4}')
+
         for part in parts:
             part = part.strip()
-            if part:
+            if not part:
+                continue
+            # Check if the token is one of the special delimiters
+            if part in ['(', ')', ';', 'or']:
                 tokens.append(part)
+            else:
+                # Attempt to extract valid course tokens
+                matches = course_pattern.findall(part)
+                # If we found valid course codes, add them
+                # If not, we skip the token since it doesn't match the pattern
+                if matches:
+                    tokens.extend(matches)
+                    
         return tokens
 
     # parse_sequence handles a sequence of tokens possibly containing:
