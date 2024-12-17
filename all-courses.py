@@ -72,7 +72,7 @@ class GroupByCollegePipeline:
             self.college_courses[college].sort(key=lambda x: x['course_number'])
 
         # Save grouped and sorted data to a JSON file
-        with open('output/courses_grouped.json', 'w') as f:
+        with open('output/courses.json', 'w') as f:
             json.dump(self.college_courses, f, indent=4)
         spider.custom_logger.info("Grouped and sorted courses saved to courses_grouped.json.")
 
@@ -91,7 +91,7 @@ class UGPageSpider(scrapy.Spider):
         self.custom_logger.setLevel(logging.DEBUG)
 
         # Create handlers
-        file_handler = logging.FileHandler("spider_log.txt")
+        file_handler = logging.FileHandler("logging/spider_log.txt")
         console_handler = logging.StreamHandler()
 
         # Set logging format
