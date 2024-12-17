@@ -104,8 +104,6 @@ def extract_course_name(req_phrase):
 def condense_requirements(req_list):
     # Check if there's an 'OR' in req_list
     if 'OR' not in req_list:
-        # No OR, if single element just return it
-        # If multiple elements separated by semicolons, we might want to nest them as Requirements
         if len(req_list) == 1:
             return req_list[0]
         else:
@@ -126,8 +124,6 @@ def condense_requirements(req_list):
         if current_segment:
             or_segments.append(current_segment)
 
-        # Now we have something like [[...segment1...], [...segment2...]]
-        # Condense each segment and then make a list of them
         condensed_segments = []
         for seg in or_segments:
             c = condense_requirements(seg)
