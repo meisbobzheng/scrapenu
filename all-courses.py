@@ -7,8 +7,6 @@ import json
 import scrapy
 from util import parse_requirements
 
-
-
 def parseCourseBlocks(course_blocks, college, logging):
     courses = []
 
@@ -36,7 +34,7 @@ def parseCourseBlocks(course_blocks, college, logging):
         attributes = course.css('p.courseblockextra:contains("Attribute(s):")::text').getall()
         attributes = ', '.join(attributes).strip()
 
-        if course_number is 'CS 3000':
+        if course_number == 'CS 3000':
             logging.info(f"Found CS 3000: {course_number}, {course_name}")
 
         courses.append({
