@@ -13,7 +13,6 @@ def parseCourseBlocks(course_blocks, college, logging):
     courses = []
 
     for course in course_blocks:
-        # Extract course title
         title_block = course.css('p.courseblocktitle strong::text').get(default='').strip()
         if not title_block:
             logging.warning("No title block found for a course.")
@@ -22,10 +21,8 @@ def parseCourseBlocks(course_blocks, college, logging):
         course_number = title_block.split('.')[0]
         course_name = title_block.split('.')[1].strip() if '.' in title_block else ''
 
-        # Extract course description
         description = course.css('p.cb_desc::text').get(default='').strip().replace('\xa0', ' ')
 
-        # Extract prerequisites
         raw_prerequisites = course.css('p.courseblockextra:contains("Prerequisite(s):")')
 
         if raw_prerequisites:
@@ -36,7 +33,6 @@ def parseCourseBlocks(course_blocks, college, logging):
         corequisites = course.css('p.courseblockextra:contains("Corequisite(s):")').css('a.bubblelink.code::text').getall()
         corequisites = ', '.join(corequisites).strip()
 
-        # Extract attributes
         attributes = course.css('p.courseblockextra:contains("Attribute(s):")::text').getall()
         attributes = ', '.join(attributes).strip()
 
@@ -61,17 +57,16 @@ class GroupByCollegePipeline:
         self.college_courses = defaultdict(list)
 
     def process_item(self, item, spider):
-        # Group courses by college
         college = item['college']
         self.college_courses[college].append(item)
         return item
 
     def close_spider(self, spider):
-        # Sort courses within each college by course number
         for college in self.college_courses:
             self.college_courses[college].sort(key=lambda x: x['course_number'])
 
-        # Save grouped and sorted data to a JSON file
+        # save to da json
+        # TODO: link to mongo or... maybe postgres 
         with open('output/courses.json', 'w') as f:
             json.dump(self.college_courses, f, indent=4)
         spider.custom_logger.info("Grouped and sorted courses saved to courses_grouped.json.")
@@ -129,7 +124,6 @@ class UGPageSpider(scrapy.Spider):
     def parse_college(self, response, college, depth):
         # self.custom_logger.info(f"Parsing college page: {response.url}, Depth: {depth}")
 
-        # Select course blocks
         course_blocks = response.css('div.courseblock')
 
         if not course_blocks:
@@ -168,11 +162,11 @@ class UGPageSpider(scrapy.Spider):
 if __name__ == "__main__":
     process = CrawlerProcess(settings={
         'ITEM_PIPELINES': {
-            '__main__.GroupByCollegePipeline': 300,  # Use the pipeline for grouping
+            '__main__.GroupByCollegePipeline': 300, 
         },
-        'ROBOTSTXT_OBEY': False,  # Ignore robots.txt for testing
+        'ROBOTSTXT_OBEY': False,  # fuck you
         'USER_AGENT': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',  # Set User-Agent
-        'LOG_LEVEL': 'INFO',  # Set log level for debugging
+        'LOG_LEVEL': 'INFO',  
     })
 
     process.crawl(UGPageSpider)
