@@ -1,11 +1,11 @@
 import scrapy
 import logging
 from scrapy.crawler import CrawlerProcess
-from courses import normalize_unicode_to_ascii
+from util import normalize_unicode_to_ascii
 from collections import defaultdict
 import json
 import scrapy
-import re
+from util import parse_requirements
 
 
 
@@ -48,7 +48,7 @@ def parseCourseBlocks(course_blocks, college, logging):
             'course_number': normalize_unicode_to_ascii(course_number),
             'course_name': normalize_unicode_to_ascii(course_name),
             'description': normalize_unicode_to_ascii(description),
-            'prerequisites': prerequisites,
+            'prerequisites': parse_requirements(prerequisites),
             'corequisites': normalize_unicode_to_ascii(corequisites),
             'attributes': normalize_unicode_to_ascii(attributes),
         })
