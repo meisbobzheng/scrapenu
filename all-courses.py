@@ -7,24 +7,6 @@ import json
 import scrapy
 import re
 
-def parse_prereq(prerequisite):
-    extracted_text = []
-    if not prerequisite:
-        return ""
-    for item in prerequisite:
-        if isinstance(item, str):
-            text = item.strip()
-            extracted_text.append(text)
-        elif item.root.tag == 'a':  # Check if it's a link
-            text = item.xpath('text()').get()  # Extract the link text
-            extracted_text.append(text)
-        elif item.root.tag is None:  # Text node
-            text = item.get().strip()
-            extracted_text.append(text)
-
-    # Join the text to create the desired structure
-    result = ' '.join(extracted_text)
-    return result
 
 
 def parseCourseBlocks(course_blocks, college, logging):
@@ -44,8 +26,15 @@ def parseCourseBlocks(course_blocks, college, logging):
         description = course.css('p.cb_desc::text').get(default='').strip().replace('\xa0', ' ')
 
         # Extract prerequisites
-        raw_prerequisites = course.css('p.courseblockextra:contains("Prerequisite(s):")').getall()
-        prerequisites = parse_prereq(raw_prerequisites)
+        raw_prerequisites = course.css('p.courseblockextra:contains("Prerequisite(s):")')
+
+        if raw_prerequisites:
+            prerequisites = normalize_unicode_to_ascii(raw_prerequisites.xpath('string()').get().replace('Prerequisite(s): ', '').strip())
+        else:
+            prerequisites = ''
+
+        corequisites = course.css('p.courseblockextra:contains("Corequisite(s):")').css('a.bubblelink.code::text').getall()
+        corequisites = ', '.join(corequisites).strip()
 
         # Extract attributes
         attributes = course.css('p.courseblockextra:contains("Attribute(s):")::text').getall()
@@ -60,6 +49,7 @@ def parseCourseBlocks(course_blocks, college, logging):
             'course_name': normalize_unicode_to_ascii(course_name),
             'description': normalize_unicode_to_ascii(description),
             'prerequisites': prerequisites,
+            'corequisites': normalize_unicode_to_ascii(corequisites),
             'attributes': normalize_unicode_to_ascii(attributes),
         })
 
@@ -82,7 +72,7 @@ class GroupByCollegePipeline:
             self.college_courses[college].sort(key=lambda x: x['course_number'])
 
         # Save grouped and sorted data to a JSON file
-        with open('courses_grouped.json', 'w') as f:
+        with open('output/courses_grouped.json', 'w') as f:
             json.dump(self.college_courses, f, indent=4)
         spider.custom_logger.info("Grouped and sorted courses saved to courses_grouped.json.")
 
