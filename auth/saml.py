@@ -3,6 +3,8 @@ import json
 import time
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
+import sys
+import getpass
 
 # takes in url
 # returns verified SAML cookies
@@ -63,6 +65,18 @@ class NEU_SAML_Authenticator:
         print(response.text)
 
 
-        
-new_auth = NEU_SAML_Authenticator()
-result = new_auth.authenticate("https://www.applyweb.com/eval/shibboleth/neu/36892", "test", "password")
+
+# new_auth = NEU_SAML_Authenticator()
+# result = new_auth.authenticate("https://www.applyweb.com/eval/shibboleth/neu/36892", "test", "password")
+
+def main():
+    url = input("Enter URL: ")
+    username = input ("Enter username: ")
+    password = getpass.getpass("Enter password: ")
+
+    new_auth = NEU_SAML_Authenticator()
+    result = new_auth.authenticate(url, username, password)
+    print(result)
+
+if __name__ == "__main__":
+    main()
