@@ -3,6 +3,7 @@ import json
 import time
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
+from requests_html import HTMLSession
 import sys
 import getpass
 
@@ -62,7 +63,12 @@ class NEU_SAML_Authenticator:
         # post to form action
         print("posting to " + new_base_url + action)
         response = self.session.post(new_base_url + action, data=input_data)
-        print(response.text)
+        # print(response.text)
+
+        iform_content = BeautifulSoup(response.text, 'html.parser').find('iframe')
+        print(iform_content)
+        if iform_content is None:
+            print("No iframe found")
 
 
 
