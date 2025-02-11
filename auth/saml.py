@@ -1,11 +1,11 @@
 import requests
-import json
-import time
+# import json
+# import time
 from bs4 import BeautifulSoup
-from urllib.parse import urljoin
-from requests_html import HTMLSession
+# from urllib.parse import urljoin
 import sys
 import getpass
+from playwright.sync_api import sync_playwright
 
 # takes in url
 # returns verified SAML cookies
@@ -65,10 +65,33 @@ class NEU_SAML_Authenticator:
         response = self.session.post(new_base_url + action, data=input_data)
         # print(response.text)
 
-        iform_content = BeautifulSoup(response.text, 'html.parser').find('iframe')
-        print(iform_content)
-        if iform_content is None:
+        # find the saml iframe
+        soup = BeautifulSoup(response.text, 'html.parser')
+        iframe = soup.find('iframe')
+
+        if not iframe:
             print("No iframe found")
+            return None
+
+        print("iframe found")
+
+        # Extract iframe properties
+        duo_host = iframe.attrs['data-host']
+        duo_action = iframe.attrs['data-post-action']
+        sig_request = iframe.attrs['data-sig-request']
+
+        print ("duo_host: " + duo_host)
+        print ("duo_action: " + duo_action)
+        print ("sig_request: " + sig_request)
+        
+        duo_url = f"https://{duo_host}{duo_action}"
+        print("duo_url: " + duo_url)
+
+        # with sync_playwright() as playwright:
+        #     browser = playwright.chromium.launch()
+        #     page = browser.new_page()
+        #     page.goto(duo_url)
+        
 
 
 
