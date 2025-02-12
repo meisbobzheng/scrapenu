@@ -87,10 +87,27 @@ class NEU_SAML_Authenticator:
         duo_url = f"https://{duo_host}{duo_action}"
         print("duo_url: " + duo_url)
 
-        # with sync_playwright() as playwright:
-        #     browser = playwright.chromium.launch()
-        #     page = browser.new_page()
-        #     page.goto(duo_url)
+        # something aint right here
+        with sync_playwright() as playwright:
+            browser = playwright.chromium.launch(headless=True)
+            page = browser.new_page()
+            page.goto(duo_url)
+
+            saml_form = page.frame_locator("iframe").locator("form")
+            saml_form.fill("username", username)
+            saml_form.fill("password", password)
+            saml_form.click("submit")
+            
+            # Extract the SAML response
+            saml_response = page.frame_locator("iframe").locator("pre").inner_text()
+            print("saml_response: " + saml_response)
+            
+            # Extract the SAML cookies
+            cookies = page.context.cookies()
+            for cookie in cookies:
+                print(cookie.name + ": " + cookie.value)
+            
+            browser.close()
         
 
 
