@@ -93,19 +93,24 @@ class NEU_SAML_Authenticator:
             page = browser.new_page()
             page.goto(duo_url)
 
-            saml_form = page.frame_locator("iframe").locator("form")
-            saml_form.fill("username", username)
-            saml_form.fill("password", password)
-            saml_form.click("submit")
+            frames = page.frames
+            duo_frame = next(f for f in frames if 'duo' in f.url.lower())
+
+            # Get the entire HTML content of the frame
+            html_content = duo_frame.content()
+            with open('auth/duo_frame.html', 'w') as f:
+                f.write(html_content)
+                f.close()
+
+
+            # # Extract the SAML response
+            # saml_response = page.frame_locator("iframe").locator("pre").inner_text()
+            # print("saml_response: " + saml_response)
             
-            # Extract the SAML response
-            saml_response = page.frame_locator("iframe").locator("pre").inner_text()
-            print("saml_response: " + saml_response)
-            
-            # Extract the SAML cookies
-            cookies = page.context.cookies()
-            for cookie in cookies:
-                print(cookie.name + ": " + cookie.value)
+            # # Extract the SAML cookies
+            # cookies = page.context.cookies()
+            # for cookie in cookies:
+            #     print(cookie.name + ": " + cookie.value)
             
             browser.close()
         
