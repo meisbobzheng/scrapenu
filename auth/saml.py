@@ -53,21 +53,21 @@ class NEU_SAML_Authenticator:
         input_data = {}
         for input in inputs:
             input_data[input.attrs['name']] = input.attrs['value']
-            print(input.attrs['name'] + ": " + input.attrs['value'])
+            #print(input.attrs['name'] + ": " + input.attrs['value'])
 
         # populate form inputs
         input_data['j_username'] = username
         input_data['j_password'] = password
         input_data['_eventId_proceed'] = ''
 
-        # post to form action
-        print("posting to " + new_base_url + action)
+        # # post to form action
+        # print("posting to " + new_base_url + action)
         response = self.session.post(new_base_url + action, data=input_data)
         # print(response.text)
 
         # find the saml iframe
         soup = BeautifulSoup(response.text, 'html.parser')
-        iframe = soup.find('iframe')
+        iframe = soup.find('iframe', id='duo_iframe')
 
         if not iframe:
             print("No iframe found")
@@ -75,32 +75,38 @@ class NEU_SAML_Authenticator:
 
         print("iframe found")
 
-        # Extract iframe properties
-        duo_host = iframe.attrs['data-host']
-        duo_action = iframe.attrs['data-post-action']
-        sig_request = iframe.attrs['data-sig-request']
+        # with open('auth/duo_frame.html', 'w') as f:
+        #     f.write(response.text)
+        #     f.close()
 
-        print ("duo_host: " + duo_host)
-        print ("duo_action: " + duo_action)
-        print ("sig_request: " + sig_request)
-        
-        duo_url = f"https://{duo_host}{duo_action}"
-        print("duo_url: " + duo_url)
+        # # Extract iframe properties
+        # duo_host = iframe.attrs['data-host']
+        # duo_action = iframe.attrs['data-post-action']
+        # sig_request = iframe.attrs['data-sig-request']
+
+        # print ("duo_host: " + duo_host)
+        # print ("duo_action: " + duo_action)
+        # print ("sig_request: " + sig_request)
+        # #print(iframe)
+
+
 
         # something aint right here
         with sync_playwright() as playwright:
             browser = playwright.chromium.launch(headless=True)
-            page = browser.new_page()
-            page.goto(duo_url)
+            context = browser.new_context()
+            
+            response = context.request.post(new_base_url + action, data=input_data)
+            print(response.status)
+            print(response.headers)
+            print(response.text)
 
-            frames = page.frames
-            duo_frame = next(f for f in frames if 'duo' in f.url.lower())
-
-            # Get the entire HTML content of the frame
-            html_content = duo_frame.content()
-            with open('auth/duo_frame.html', 'w') as f:
-                f.write(html_content)
-                f.close()
+            # If there's a redirect, follow it
+            if 300 <= response.status < 400 and "location" in response.headers:
+                redirect_url = response.headers["location"]
+                page = browser.new_page()
+                page.goto(redirect_url)
+                print(page.content())  # HTML after redirection
 
 
             # # Extract the SAML response
