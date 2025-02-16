@@ -75,6 +75,10 @@ class NEU_SAML_Authenticator:
 
         print("iframe found")
 
+        # use normal requests
+        # dont need to be using playwright
+        # refer to the screenshot!!
+
         # with open('auth/duo_frame.html', 'w') as f:
         #     f.write(response.text)
         #     f.close()
