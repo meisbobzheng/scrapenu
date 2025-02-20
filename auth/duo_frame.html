@@ -1,270 +1,332 @@
-<!DOCTYPE html><html lang="en"><!--<![endif]--><head>
-<meta charset="utf-8">
-
-<title>
-Two-Factor Authentication
-</title>
-<!-- Import for all versions of IE, in case the standards mode is downgraded to IE8 -->
-<!--[if IE]> <link rel="stylesheet" href="&#x2f;frame&#x2f;static&#x2f;css&#x2f;v3&#x2f;ie8.css&#x3f;v&#x3d;e9b26"> <![endif]-->
-
-<link rel="stylesheet" href="/frame/static/css/normalize.css?v=a674e">
-<link rel="stylesheet" href="/frame/static/fonts/ss-standard/ss-standard.css?v=a8885">
-<link rel="stylesheet" href="/frame/static/css/fonts/duo-admin.css?v=50a8a">
-<link rel="stylesheet" href="/frame/static/css/v3/base.css?v=9a14c">
-
-<link rel="stylesheet" href="/frame/static/css/tipsy.css?v=4217a">
-
-
-</head>
-<body>
-<div class="">
-<div class="base-wrapper ">
-
-<div class="base-main">
-<div role="main" class="base-body">
-
-<form action="/frame/prompt" method="post" id="login-form" class="inline login-form">
-<input type="hidden" name="sid" value="NDRkY2MzZjk5NTExNDI3Y2I1YTU1MWZhODc3Njg2Yjc=|1740077721|504051e2e2f2b26481b633457715afe0b9889264">
-<input type="hidden" name="url" value="/frame/prompt">
-<input type="hidden" name="enrollment_message" value="">
-<input type="hidden" name="itype" value="shibboleth">
-
-<input type="hidden" name="_xsrf" value="1536d386ade8e40bbed35db521dab0ee">
-
-<input type="hidden" name="ukey" value="DUW7KNXJJ11BB38B4LJN">
-
-<input type="hidden" name="out_of_date" value="False">
-<input type="hidden" name="days_out_of_date" value="0">
-<input type="hidden" name="should_update_dm" value="False">
-
-
-<input type="hidden" name="preferred_factor" value="">
-<input type="hidden" name="preferred_device" value="phone1">
-
-<input type="hidden" name="days_to_block" value="None">
-<input type="hidden" name="should_retry_u2f_timeouts" value="True">
-
-<input type="hidden" name="has_ssp_shutoff_feature" value="False">
-
-
-<input type="hidden" id="has_phone_that_requires_compliance_text" name="has_phone_that_requires_compliance_text" value="False">
-
-<fieldset class="device-selector hidden">
-<h1 class="cramped-frame-view">
-Device:
-</h1>
-<div class="device-select-wrapper">
-<select name="device" aria-label="Device" tabindex="2">
-
-
-
-
-
-<option value="phone1">Initial Claim Phone (XXX-XXX-0967)</option>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</select>
-
-</div>
-</fieldset>
-
-<div id="auth_methods">
-
-<fieldset data-device-index="phone1" class="">
-<h2 class="medium-or-larger auth-method-header">
-Choose an authentication method
-</h2>
-
-
-<div class="row-label push-label">
-<input type="hidden" name="factor" value="Duo Push">
-<span class="label factor-label">
-<i class="icon-smartphone-check"></i>
-Duo Push
-
-
-<small class="recommended">
-Recommended
-</small>
-
-
-</span>
-<button tabindex="2" type="submit" class="auth-button positive"><!-- -->Send Me a Push </button>
-</div>
-
-
-
-
-<div class="row-label phone-label">
-<input type="hidden" name="factor" value="Phone Call">
-<span class="label factor-label">
-<i class="icon-call-ringing" alt="" role="presentation"></i>
-Call Me
-
-</span>
-<button tabindex="2" type="submit" class="auth-button positive"><!-- -->Call Me </button>
-</div>
-
-<div class="passcode-label row-label">
-<input type="hidden" name="factor" value="Passcode">
-<span class="label factor-label">
-<i class="icon-smartphone-ellipsis" alt="" role="presentation"></i>
-Passcode
-</span>
-<div class="passcode-input-wrapper">
-<input type="text" name="passcode" autocomplete="off" data-index="phone1" class="hidden passcode-input" placeholder="ex. 867539" aria-label="passcode" tabindex="2">
-<div class="next-passcode-msg" role="alert" aria-live="polite"></div>
-</div>
-<button tabindex="2" type="submit" id="passcode" class="auth-button positive"><!-- -->Enter a Passcode </button>
-<input name="phone-smsable" type="hidden" value="True">
-<input name="mobile-otpable" type="hidden" value="True">
-<input name="next-passcode" type="hidden" value="None">
-</div>
-
-</fieldset>
-
-
-
-
-
-<input type="hidden" name="has-token" value="false">
-
-
-</div>
-
-<div>
-
-<div class="stay-logged-in">
-<label class="remember_me_label_field">
-<input type="checkbox" name="dampen_choice" value="1" tabindex="2">
-<span id="remember_me_label_text">
-Remember me for 30 days
-</span>
-</label>
-<input type="hidden" name="cookies_allowed" value="">
-</div>
-
-</div>
-</form>
-
-
-</div>
-</div>
-<div class="base-navigation">
-
-<div class="base-navigation">
-<div role="banner">
-
-<a href="/frame/prompt?sid=NDRkY2MzZjk5NTExNDI3Y2I1YTU1MWZhODc3Njg2Yjc=|1740077721|504051e2e2f2b26481b633457715afe0b9889264">
-<img src="/frame/logo?sid=NDRkY2MzZjk5NTExNDI3Y2I1YTU1MWZhODc3Njg2Yjc=|1740077721|504051e2e2f2b26481b633457715afe0b9889264" alt="Northeastern University Authentication" width="128">
-</a>
-
-</div>
-<div class="help-sidebar">
-<button class="btn btn-support">
-<i class="icon-align-justify" aria-label="Open"></i>
-<i class="icon-delete" aria-label="Close"></i>
-Settings
-</button>
-<div class="help-links">
-<nav role="navigation">
-
-<a id="help_link" class="help-nav" href="https://guide.duo.com/traditional-prompt" target="_blank" aria-label="What is the Duo Prompt? (Opens in a new tab.)">
-What is this?<i class="icon-new-window"></i>
-</a>
-
-
-<a href="#" class="need-help">Need help?</a>
-</nav>
-
-<div role="contentinfo">
-<a href="https://duo.com" class="branding-link" target="_blank" rel="noreferrer noopener">
-Secured by Duo
-</a>
-</div>
-
-
-</div>
-
-</div>
-<div class="help-overlay offscreen">
-<div class="help-links">
-<nav role="navigation">
-
-<a id="help_link" class="help-nav" href="https://guide.duo.com/traditional-prompt" target="_blank" aria-label="What is the Duo Prompt? (Opens in a new tab.)">
-What is this?<i class="icon-new-window"></i>
-</a>
-
-
-<a href="#" class="need-help">Need help?</a>
-</nav>
-
-<div role="contentinfo">
-<a href="https://duo.com" class="branding-link" target="_blank" rel="noreferrer noopener">
-Secured by Duo
-</a>
-</div>
-
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="base-sidebar">
-
-</div>
-<div id="messages-view" class="hidden">
-<div class="messages-list">
-
-</div>
-</div>
-
-
-</div>
-</div>
-<script id="translations" type="text/json">
-{"locale_data": {"js-messages": {"": {"domain": "js-messages", "lang": "en", "plural_forms": "nplurals&#x3d;2&#x3b; plural&#x3d;&#x28;n &#x21;&#x3d; 1&#x29;&#x3b;"}}}, "domain": "js-messages"}
-</script>
-
-
-<!-- Hidden XSRF input needed for POST requests made by errors.js -->
-<input type="hidden" name="_xsrf" value="1536d386ade8e40bbed35db521dab0ee">
-
-<script src="/frame/static/shared/lib/jquery/jquery-prologue.js?v=400dc"></script>
-<script src="/frame/static/shared/lib/jquery/jquery.min.js?v=ff152"></script>
-<script src="/frame/static/shared/lib/he/he.min.js?v=aaa33"></script>
-<script src="/frame/static/js/lib/jquery-postmessage.min.js?v=98c73"></script>
-<script src="/frame/static/shared/lib/lodash/lodash.min.js?v=6585f"></script>
-<script src="/frame/static/shared/lib/backbone/backbone-min.js?v=e0ff6"></script>
-<script src="/frame/static/js/page/v3/frame.js?v=aaf8c"></script>
-<script src="/frame/static/js/page/v3/base.js?v=21bdc"></script>
-<script src="/frame/static/shared/lib/validator/validator.min.js?v=9a068"></script>
-<script src="/frame/static/shared/lib/jquery/jquery-epilogue.js?v=c4ac5"></script>
-<script id="browser_exceptions" src="/frame/static/shared/js/errors.js?v=d10d2" data-url="/frame/browser_exceptions"></script>
-<input type="hidden" name="helpdesk-message" id="helpdesk-message" value="&quot;If you have any questions or need additional help with this service, please contact the ITS Service Desk at 617-373-4357 (HELP) or email help@northeastern.edu.&quot;">
-<!--[if lt IE 10]>
-<script src="&#x2f;frame&#x2f;static&#x2f;js&#x2f;page&#x2f;v3&#x2f;quirks.js&#x3f;v&#x3d;fdbc7"></script>
-<![endif]-->
-
-
-<script src="/frame/static/js/lib/jquery.tipsy.js?v=c0432"></script>
-<script src="/frame/static/js/page/v3/prompt.js?v=95224"></script>
-
-
-
-
-</body></html>
+<!DOCTYPE html>
+<html lang="en">
+  <!--<!
+  [endif]--><head>
+    <meta charset="utf-8" />
+
+    <title>Two-Factor Authentication</title>
+    <!-- Import for all versions of IE, in case the standards mode is downgraded to IE8 -->
+    <!--[if IE]>
+      <link
+        rel="stylesheet"
+        href="&#x2f;frame&#x2f;static&#x2f;css&#x2f;v3&#x2f;ie8.css&#x3f;v&#x3d;e9b26"
+      />
+    <![endif]-->
+
+    <link rel="stylesheet" href="/frame/static/css/normalize.css?v=a674e" />
+    <link
+      rel="stylesheet"
+      href="/frame/static/fonts/ss-standard/ss-standard.css?v=a8885"
+    />
+    <link
+      rel="stylesheet"
+      href="/frame/static/css/fonts/duo-admin.css?v=50a8a"
+    />
+    <link rel="stylesheet" href="/frame/static/css/v3/base.css?v=9a14c" />
+
+    <link rel="stylesheet" href="/frame/static/css/tipsy.css?v=4217a" />
+  </head>
+  <body>
+    <div class="">
+      <div class="base-wrapper">
+        <div class="base-main">
+          <div role="main" class="base-body">
+            <form
+              action="/frame/prompt"
+              method="post"
+              id="login-form"
+              class="inline login-form"
+            >
+              <input
+                type="hidden"
+                name="sid"
+                value="NDRkY2MzZjk5NTExNDI3Y2I1YTU1MWZhODc3Njg2Yjc=|1740077721|504051e2e2f2b26481b633457715afe0b9889264"
+              />
+              <input type="hidden" name="url" value="/frame/prompt" />
+              <input type="hidden" name="enrollment_message" value="" />
+              <input type="hidden" name="itype" value="shibboleth" />
+
+              <input
+                type="hidden"
+                name="_xsrf"
+                value="1536d386ade8e40bbed35db521dab0ee"
+              />
+
+              <input type="hidden" name="ukey" value="DUW7KNXJJ11BB38B4LJN" />
+
+              <input type="hidden" name="out_of_date" value="False" />
+              <input type="hidden" name="days_out_of_date" value="0" />
+              <input type="hidden" name="should_update_dm" value="False" />
+
+              <input type="hidden" name="preferred_factor" value="" />
+              <input type="hidden" name="preferred_device" value="phone1" />
+
+              <input type="hidden" name="days_to_block" value="None" />
+              <input
+                type="hidden"
+                name="should_retry_u2f_timeouts"
+                value="True"
+              />
+
+              <input
+                type="hidden"
+                name="has_ssp_shutoff_feature"
+                value="False"
+              />
+
+              <input
+                type="hidden"
+                id="has_phone_that_requires_compliance_text"
+                name="has_phone_that_requires_compliance_text"
+                value="False"
+              />
+
+              <fieldset class="device-selector hidden">
+                <h1 class="cramped-frame-view">Device:</h1>
+                <div class="device-select-wrapper">
+                  <select name="device" aria-label="Device" tabindex="2">
+                    <option value="phone1">
+                      Initial Claim Phone (XXX-XXX-0967)
+                    </option>
+                  </select>
+                </div>
+              </fieldset>
+
+              <div id="auth_methods">
+                <fieldset data-device-index="phone1" class="">
+                  <h2 class="medium-or-larger auth-method-header">
+                    Choose an authentication method
+                  </h2>
+
+                  <div class="row-label push-label">
+                    <input type="hidden" name="factor" value="Duo Push" />
+                    <span class="label factor-label">
+                      <i class="icon-smartphone-check"></i>
+                      Duo Push
+
+                      <small class="recommended"> Recommended </small>
+                    </span>
+                    <button
+                      tabindex="2"
+                      type="submit"
+                      class="auth-button positive"
+                    >
+                      <!-- -->Send Me a Push
+                    </button>
+                  </div>
+
+                  <div class="row-label phone-label">
+                    <input type="hidden" name="factor" value="Phone Call" />
+                    <span class="label factor-label">
+                      <i
+                        class="icon-call-ringing"
+                        alt=""
+                        role="presentation"
+                      ></i>
+                      Call Me
+                    </span>
+                    <button
+                      tabindex="2"
+                      type="submit"
+                      class="auth-button positive"
+                    >
+                      <!-- -->Call Me
+                    </button>
+                  </div>
+
+                  <div class="passcode-label row-label">
+                    <input type="hidden" name="factor" value="Passcode" />
+                    <span class="label factor-label">
+                      <i
+                        class="icon-smartphone-ellipsis"
+                        alt=""
+                        role="presentation"
+                      ></i>
+                      Passcode
+                    </span>
+                    <div class="passcode-input-wrapper">
+                      <input
+                        type="text"
+                        name="passcode"
+                        autocomplete="off"
+                        data-index="phone1"
+                        class="hidden passcode-input"
+                        placeholder="ex. 867539"
+                        aria-label="passcode"
+                        tabindex="2"
+                      />
+                      <div
+                        class="next-passcode-msg"
+                        role="alert"
+                        aria-live="polite"
+                      ></div>
+                    </div>
+                    <button
+                      tabindex="2"
+                      type="submit"
+                      id="passcode"
+                      class="auth-button positive"
+                    >
+                      <!-- -->Enter a Passcode
+                    </button>
+                    <input name="phone-smsable" type="hidden" value="True" />
+                    <input name="mobile-otpable" type="hidden" value="True" />
+                    <input name="next-passcode" type="hidden" value="None" />
+                  </div>
+                </fieldset>
+
+                <input type="hidden" name="has-token" value="false" />
+              </div>
+
+              <div>
+                <div class="stay-logged-in">
+                  <label class="remember_me_label_field">
+                    <input
+                      type="checkbox"
+                      name="dampen_choice"
+                      value="1"
+                      tabindex="2"
+                    />
+                    <span id="remember_me_label_text">
+                      Remember me for 30 days
+                    </span>
+                  </label>
+                  <input type="hidden" name="cookies_allowed" value="" />
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="base-navigation">
+          <div class="base-navigation">
+            <div role="banner">
+              <a
+                href="/frame/prompt?sid=NDRkY2MzZjk5NTExNDI3Y2I1YTU1MWZhODc3Njg2Yjc=|1740077721|504051e2e2f2b26481b633457715afe0b9889264"
+              >
+                <img
+                  src="/frame/logo?sid=NDRkY2MzZjk5NTExNDI3Y2I1YTU1MWZhODc3Njg2Yjc=|1740077721|504051e2e2f2b26481b633457715afe0b9889264"
+                  alt="Northeastern University Authentication"
+                  width="128"
+                />
+              </a>
+            </div>
+            <div class="help-sidebar">
+              <button class="btn btn-support">
+                <i class="icon-align-justify" aria-label="Open"></i>
+                <i class="icon-delete" aria-label="Close"></i>
+                Settings
+              </button>
+              <div class="help-links">
+                <nav role="navigation">
+                  <a
+                    id="help_link"
+                    class="help-nav"
+                    href="https://guide.duo.com/traditional-prompt"
+                    target="_blank"
+                    aria-label="What is the Duo Prompt? (Opens in a new tab.)"
+                  >
+                    What is this?<i class="icon-new-window"></i>
+                  </a>
+
+                  <a href="#" class="need-help">Need help?</a>
+                </nav>
+
+                <div role="contentinfo">
+                  <a
+                    href="https://duo.com"
+                    class="branding-link"
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    Secured by Duo
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="help-overlay offscreen">
+              <div class="help-links">
+                <nav role="navigation">
+                  <a
+                    id="help_link"
+                    class="help-nav"
+                    href="https://guide.duo.com/traditional-prompt"
+                    target="_blank"
+                    aria-label="What is the Duo Prompt? (Opens in a new tab.)"
+                  >
+                    What is this?<i class="icon-new-window"></i>
+                  </a>
+
+                  <a href="#" class="need-help">Need help?</a>
+                </nav>
+
+                <div role="contentinfo">
+                  <a
+                    href="https://duo.com"
+                    class="branding-link"
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    Secured by Duo
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="base-sidebar"></div>
+        <div id="messages-view" class="hidden">
+          <div class="messages-list"></div>
+        </div>
+      </div>
+    </div>
+    <script id="translations" type="text/json">
+      {
+        "locale_data": {
+          "js-messages": {
+            "": {
+              "domain": "js-messages",
+              "lang": "en",
+              "plural_forms": "nplurals&#x3d;2&#x3b; plural&#x3d;&#x28;n &#x21;&#x3d; 1&#x29;&#x3b;"
+            }
+          }
+        },
+        "domain": "js-messages"
+      }
+    </script>
+
+    <!-- Hidden XSRF input needed for POST requests made by errors.js -->
+    <input
+      type="hidden"
+      name="_xsrf"
+      value="1536d386ade8e40bbed35db521dab0ee"
+    />
+
+    <script src="/frame/static/shared/lib/jquery/jquery-prologue.js?v=400dc"></script>
+    <script src="/frame/static/shared/lib/jquery/jquery.min.js?v=ff152"></script>
+    <script src="/frame/static/shared/lib/he/he.min.js?v=aaa33"></script>
+    <script src="/frame/static/js/lib/jquery-postmessage.min.js?v=98c73"></script>
+    <script src="/frame/static/shared/lib/lodash/lodash.min.js?v=6585f"></script>
+    <script src="/frame/static/shared/lib/backbone/backbone-min.js?v=e0ff6"></script>
+    <script src="/frame/static/js/page/v3/frame.js?v=aaf8c"></script>
+    <script src="/frame/static/js/page/v3/base.js?v=21bdc"></script>
+    <script src="/frame/static/shared/lib/validator/validator.min.js?v=9a068"></script>
+    <script src="/frame/static/shared/lib/jquery/jquery-epilogue.js?v=c4ac5"></script>
+    <script
+      id="browser_exceptions"
+      src="/frame/static/shared/js/errors.js?v=d10d2"
+      data-url="/frame/browser_exceptions"
+    ></script>
+    <input
+      type="hidden"
+      name="helpdesk-message"
+      id="helpdesk-message"
+      value='"If you have any questions or need additional help with this service, please contact the ITS Service Desk at 617-373-4357 (HELP) or email help@northeastern.edu."'
+    />
+    <!--[if lt IE 10]>
+      <script src="&#x2f;frame&#x2f;static&#x2f;js&#x2f;page&#x2f;v3&#x2f;quirks.js&#x3f;v&#x3d;fdbc7"></script>
+    <![endif]-->
+
+    <script src="/frame/static/js/lib/jquery.tipsy.js?v=c0432"></script>
+    <script src="/frame/static/js/page/v3/prompt.js?v=95224"></script>
+  </body>
+</html>

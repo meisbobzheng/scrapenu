@@ -95,6 +95,8 @@ class NEU_SAML_Authenticator:
 
         iframe_src = 'https://' + duo_host + '/frame/web/v1/auth?tx=' + sig_request + '&parent=' + new_base_url + duo_action + '&v=2.6'
 
+        print('iframe src: ' + iframe_src)
+
         with sync_playwright() as p: 
             browser = p.chromium.launch(headless = True)
             page = browser.new_page()
@@ -103,6 +105,8 @@ class NEU_SAML_Authenticator:
             #page.wait_for_selector("#react-component", timeout=5000)
 
             full_response = page.content()
+
+            #send_push_button = page.press()
 
             with open('auth/duo_frame.html', 'w') as f:
                 f.write(full_response)
