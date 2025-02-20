@@ -83,46 +83,33 @@ class NEU_SAML_Authenticator:
         #     f.write(response.text)
         #     f.close()
 
-        # # Extract iframe properties
-        # duo_host = iframe.attrs['data-host']
-        # duo_action = iframe.attrs['data-post-action']
-        # sig_request = iframe.attrs['data-sig-request']
+        duo_host = iframe.attrs['data-host']
+        duo_action = iframe.attrs['data-post-action']
+        sig_request = iframe.attrs['data-sig-request'].split(':APP')[0]
 
-        # print ("duo_host: " + duo_host)
-        # print ("duo_action: " + duo_action)
-        # print ("sig_request: " + sig_request)
-        # #print(iframe)
-
+        print ("duo_host: " + duo_host)
+        print ("duo_action: " + duo_action)
+        print ("sig_request: " + sig_request)
+        print("new base url: " + new_base_url)
 
 
-        # something aint right here
-        with sync_playwright() as playwright:
-            browser = playwright.chromium.launch(headless=True)
-            context = browser.new_context()
-            
-            response = context.request.post(new_base_url + action, data=input_data)
-            print(response.status)
-            print(response.headers)
-            print(response.text)
+        iframe_src = 'https://' + duo_host + '/frame/web/v1/auth?tx=' + sig_request + '&parent=' + new_base_url + duo_action + '&v=2.6'
 
-            # If there's a redirect, follow it
-            if 300 <= response.status < 400 and "location" in response.headers:
-                redirect_url = response.headers["location"]
-                page = browser.new_page()
-                page.goto(redirect_url)
-                print(page.content())  # HTML after redirection
+        with sync_playwright() as p: 
+            browser = p.chromium.launch(headless = True)
+            page = browser.new_page()
+            page.goto(iframe_src, wait_until='networkidle')
 
+            #page.wait_for_selector("#react-component", timeout=5000)
 
-            # # Extract the SAML response
-            # saml_response = page.frame_locator("iframe").locator("pre").inner_text()
-            # print("saml_response: " + saml_response)
-            
-            # # Extract the SAML cookies
-            # cookies = page.context.cookies()
-            # for cookie in cookies:
-            #     print(cookie.name + ": " + cookie.value)
+            full_response = page.content()
+
+            with open('auth/duo_frame.html', 'w') as f:
+                f.write(full_response)
+                f.close()
             
             browser.close()
+
         
 
 
@@ -131,13 +118,14 @@ class NEU_SAML_Authenticator:
 # result = new_auth.authenticate("https://www.applyweb.com/eval/shibboleth/neu/36892", "test", "password")
 
 def main():
-    url = input("Enter URL: ")
+    # url = input("Enter URL: ")
+    url = 'https://www.applyweb.com/eval/shibboleth/neu/36892'
     username = input ("Enter username: ")
     password = getpass.getpass("Enter password: ")
 
     new_auth = NEU_SAML_Authenticator()
-    result = new_auth.authenticate(url, username, password)
-    print(result)
+    new_auth.authenticate(url, username, password)
+
 
 if __name__ == "__main__":
     main()
