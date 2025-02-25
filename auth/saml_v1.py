@@ -97,22 +97,32 @@ class NEU_SAML_Authenticator:
 
         print('iframe src: ' + iframe_src)
 
+        auth_cookie = None
+
         with sync_playwright() as p: 
             browser = p.chromium.launch(headless = True)
-            page = browser.new_page()
+            context = browser.new_context()
+            page = context.new_page()
             page.goto(iframe_src, wait_until='networkidle')
 
-            #page.wait_for_selector("#react-component", timeout=5000)
-
-            full_response = page.content()
-
-            #send_push_button = page.press()
+            # Get all script URLs
+            script_urls = page.evaluate("[...document.querySelectorAll('script[src]')].map(s => s.src)")
+            print("Scripts Loaded:", script_urls)
 
             with open('auth/duo_frame.html', 'w') as f:
-                f.write(full_response)
+                f.write(page.content())
                 f.close()
-            
+
+            page.get_by_role("button", name="Send Me a Push").click()
+
+
             browser.close()
+        
+        if not auth_cookie:
+            print("No auth cookie found")
+            return None
+        
+        return auth_cookie
 
         
 
@@ -128,7 +138,8 @@ def main():
     password = getpass.getpass("Enter password: ")
 
     new_auth = NEU_SAML_Authenticator()
-    new_auth.authenticate(url, username, password)
+    auth_cookie = new_auth.authenticate(url, username, password)
+    print(auth_cookie)
 
 
 if __name__ == "__main__":
