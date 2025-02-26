@@ -46,7 +46,7 @@ class NEU_SAML_Authenticator:
 
         # get form action
         action = form.attrs['action']
-        print("action: " + action)
+        #print("action: " + action)
 
         # get form inputs
         inputs = form.find_all('input')
@@ -73,7 +73,7 @@ class NEU_SAML_Authenticator:
             print("No iframe found")
             return None
 
-        print("iframe found")
+        # print("iframe found")
 
         # use normal requests
         # dont need to be using playwright
@@ -95,32 +95,39 @@ class NEU_SAML_Authenticator:
 
         iframe_src = 'https://' + duo_host + '/frame/web/v1/auth?tx=' + sig_request + '&parent=' + new_base_url + duo_action + '&v=2.6'
 
-        print('iframe src: ' + iframe_src)
+        # print('iframe src: ' + iframe_src)
 
-        auth_cookie = None
+        response = self.session.get(iframe_src)
+        soup = BeautifulSoup(response.text, 'html.parser')
 
-        with sync_playwright() as p: 
-            browser = p.chromium.launch(headless = True)
-            context = browser.new_context()
-            page = context.new_page()
-            page.goto(iframe_src, wait_until='networkidle')
-
-            # Get all script URLs
-            script_urls = page.evaluate("[...document.querySelectorAll('script[src]')].map(s => s.src)")
-            print("Scripts Loaded:", script_urls)
-
-            with open('auth/duo_frame.html', 'w') as f:
-                f.write(page.content())
-                f.close()
-
-            page.get_by_role("button", name="Send Me a Push").click()
-
-
-            browser.close()
+        scripts = soup.find_all('script')
         
-        if not auth_cookie:
-            print("No auth cookie found")
-            return None
+
+
+        # auth_cookie = None
+
+        # with sync_playwright() as p: 
+        #     browser = p.chromium.launch(headless = True)
+        #     context = browser.new_context()
+        #     page = context.new_page()
+        #     page.goto(iframe_src, wait_until='networkidle')
+
+        #     # Get all script URLs
+        #     script_urls = page.evaluate("[...document.querySelectorAll('script[src]')].map(s => s.src)")
+        #     print("Scripts Loaded:", script_urls)
+
+        #     with open('auth/duo_frame.html', 'w') as f:
+        #         f.write(page.content())
+        #         f.close()
+
+        #     page.get_by_role("button", name="Send Me a Push").click()
+
+
+        #     browser.close()
+        
+        # if not auth_cookie:
+        #     print("No auth cookie found")
+        #     return None
         
         return auth_cookie
 
