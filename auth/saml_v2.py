@@ -11,6 +11,7 @@ class NEU_SAML_Authenticator:
     def __init__(self):
         self.driver_options = webdriver.ChromeOptions()
         self.driver_options.add_argument("--headless")  # Run in headless mode
+        self.driver_options.add_argument("User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36")
         self.driver = webdriver.Chrome(options=self.driver_options)
 
     def authenticate(self, url, username, password) :
@@ -50,10 +51,10 @@ class NEU_SAML_Authenticator:
 
         # Click "Remember me" and send push notification
         try:
-            remember_me_checkbox = self.driver.find_element(By.NAME, "dampen_choice")
-            if not remember_me_checkbox.is_selected():
-                remember_me_checkbox.click()
-            print("[INFO] Selected 'Remember me for 30 days'")
+            # remember_me_checkbox = self.driver.find_element(By.NAME, "dampen_choice")
+            # if not remember_me_checkbox.is_selected():
+            #     remember_me_checkbox.click()
+            # print("[INFO] Selected 'Remember me for 30 days'")
 
             # Click the "Send Me a Push" button
             push_button = self.driver.find_element(By.XPATH, "//button[contains(text(), 'Send Me a Push')]")
@@ -78,9 +79,14 @@ class NEU_SAML_Authenticator:
         print(cookies)
 
         final_cookie = ""
+        
+        # take out the cookies we need
         for cookie in cookies:
-            final_cookie += cookie['name'] + "=" + cookie['value'] + "; "
-
+            cookie_name = cookie['name']
+            
+            if cookie_name != "_gat":
+                final_cookie += cookie_name + "=" + cookie['value'] + "; "
+        
         print("[INFO] Extracted cookies")
         #cookies['final_cookie'] = {final_cookie : final_cookie}
 
@@ -91,7 +97,7 @@ class NEU_SAML_Authenticator:
         print("[SUCCESS] Authentication completed successfully!")
         print("[INFO] Final cookie:", final_cookie)
 
-        return cookies
+        return cookies, final_cookie
 
     def close(self):
         self.driver.quit()
@@ -104,7 +110,7 @@ def main():
     password = getpass.getpass("Enter password: ")
 
     auth = NEU_SAML_Authenticator()
-    auth_cookie = auth.authenticate(url, username, password)
+    auth_cookie, cookie_string = auth.authenticate(url, username, password)
 
     if auth_cookie:
         print("[SUCCESS] Authentication completed successfully!")
