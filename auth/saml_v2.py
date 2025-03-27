@@ -13,13 +13,16 @@ class NEU_SAML_Authenticator:
         self.driver_options.add_argument("--headless")  # Run in headless mode
         self.driver = webdriver.Chrome(options=self.driver_options)
 
-    def authenticate(self, url, username, password):
+    def authenticate(self, url, username, password) :
+
+        self.driver.delete_all_cookies()
+
         print(f"[INFO] Navigating to {url}")
         self.driver.get(url)
 
         # Debug: Print initial page source
-        print("[DEBUG] Initial page source (first 1000 chars):")
-        print(self.driver.page_source[:1000])
+        #print("[DEBUG] Initial page source (first 1000 chars):")
+        #print(self.driver.page_source[:1000])
 
         # Wait for the login form
         form = WebDriverWait(self.driver, 10).until(
@@ -35,11 +38,11 @@ class NEU_SAML_Authenticator:
 
         # Debug: Print page source after submitting credentials
         time.sleep(2)  # Give it some time to load
-        print("[DEBUG] Page source after submitting credentials (first 1000 chars):")
-        print(self.driver.page_source[:1000])
+        #print("[DEBUG] Page source after submitting credentials (first 1000 chars):")
+        #print(self.driver.page_source[:1000])
 
         # Wait for the Duo iframe
-        iframe = WebDriverWait(self.driver, 10).until(
+        iframe = WebDriverWait(self.driver, 20).until(
             EC.presence_of_element_located((By.TAG_NAME, "iframe"))
         )
         print("[INFO] Found Duo iframe, switching to it")
@@ -57,8 +60,8 @@ class NEU_SAML_Authenticator:
             push_button.click()
             print("[INFO] Sent Duo push request")
         except Exception as e:
-            print(f"[ERROR] Error interacting with Duo iframe: {e}")
-            return None
+            print(f"[INFO] Already authenticated")
+            #return None
 
         # Switch back to the main content
         self.driver.switch_to.default_content()
@@ -67,17 +70,26 @@ class NEU_SAML_Authenticator:
         time.sleep(10)  # Adjust based on Duo response time
 
         # Debug: Print page source after Duo authentication
-        print("[DEBUG] Page source after Duo auth (first 1000 chars):")
-        print(self.driver.page_source[:1000])
+        #print("[DEBUG] Page source after Duo auth (first 1000 chars):")
+        #print(self.driver.page_source[:1000])
 
-        # Get cookies
+        # Get cookies and turn into normal ass cookie
         cookies = self.driver.get_cookies()
-        print("[INFO] Extracted cookies:", cookies)
+        print(cookies)
+
+        final_cookie = ""
+        for cookie in cookies:
+            final_cookie += cookie['name'] + "=" + cookie['value'] + "; "
+
+        print("[INFO] Extracted cookies")
+        #cookies['final_cookie'] = {final_cookie : final_cookie}
 
         # Store cookies in a file
         with open("cookies.json", "w") as f:
             json.dump(cookies, f)
         print("[INFO] Cookies saved to cookies.json")
+        print("[SUCCESS] Authentication completed successfully!")
+        print("[INFO] Final cookie:", final_cookie)
 
         return cookies
 
