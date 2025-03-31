@@ -154,29 +154,36 @@ def main():
     username = input("Enter username: ")
     password = getpass.getpass("Enter password: ")
 
-    auth = NEU_SAML_Authenticator()
-    auth_cookies, cookie_string = auth.authenticate(url, username, password)
+    #auth = NEU_SAML_Authenticator()
+    #auth_cookies, cookie_string = auth.authenticate(url, username, password)
 
-    print(cookie_string)
+    #print(cookie_string)
 
     session = requests.Session()
     session.headers.update({
         "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36",
     })
 
-    for cookie in auth_cookies:
-        session.cookies.set_cookie(requests.cookies.create_cookie(
-            name=cookie['name'],
-            value=cookie['value'],
-            domain=cookie['domain'],
-            path=cookie['path'],
-            secure=cookie['secure'],
-            #httpOnly=cookie['httpOnly'],
-            #sameSite=cookie['sameSite']
-        ))
+    session.headers.update({
+        "Cookie": "JSESSIONID=47AFBCC72FF56336653A93E83F4C4096; workingTermCookie=d29ya2luZ1Rlcm1Db29raWU6MTk1; _ga=GA1.2.434478740.1743108853; dtCookie=v_4_srv_6_sn_DDA29CCEFF4FB93CC1A968C884F40514_perc_100000_ol_0_mul_1_app-3Ab3e4b7260e3c8b7e_0; _shibsession_6576616c2d6e657568747470733a2f2f636f72702e636f6c6c6567656e65742e636f6d2f73686962626f6c6574682d73702f=_416f705dc6e774ce51796cd9c1c9d14d; BIGipServerp-eval.applyweb.com=671745802.36895.0000; Blaze=Z-roIMT-3p_jlxiJ5G4DPwAprQ0; sdbid=36892; sid=j$XT~RdAA2BWPeIR8tz8UmYPL_9!TV58FTcscJC9*nEtnRpLCSa$0KkKBDBa_b$~uf9VQ5vJM_rbkmFv~uMT8FjcKe^T3L6l!.Hiqqi58EqyDqOZ!*nddYc8Lx4zu0^y; awBrowserCheck=true; _gid=GA1.2.1065395895.1743448100; _gat=1; _ga_L6DBD46RX8=GS1.2.1743448101.3.0.1743448101.60.0.0"
+    })
 
-    response = session.post("https://www.applyweb.com/eval/new/reportbrowser/evaluatedCourses")
+    # for cookie in auth_cookies:
+    #     session.cookies.set_cookie(requests.cookies.create_cookie(
+    #         name=cookie['name'],
+    #         value=cookie['value'],
+    #         domain=cookie['domain'],
+    #         path=cookie['path'],
+    #         secure=cookie['secure'],
+    #         #httpOnly=cookie['httpOnly'],
+    #         #sameSite=cookie['sameSite']
+    #     ))
+
+    response = session.get("https://www.applyweb.com/eval/new/studenthome/details")
     print(response.text)
+
+    #response = session.post("https://www.applyweb.com/eval/new/reportbrowser/evaluatedCourses")
+    #print(response.text)
 
 
 if __name__ == "__main__":

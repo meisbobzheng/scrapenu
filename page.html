@@ -1,95 +1,36 @@
-<html><head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width,initial-scale=1.0">
-        <title>Log in</title>
-        <link rel="icon" type="image/png" href="/idp/images/favicon-32x32.png" sizes="32x32">
-        <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="/idp/css/style.min.css">
-    </head>
-    <body>
-        <svg aria-hidden="true" style="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-            <defs>
-                <symbol id="IconLinkIndicator" viewBox="0 0 24 24">
-                    <title>Link Indicator</title>
-                    <path d="M9.984 6l6 6-6 6-1.406-1.406 4.594-4.594-4.594-4.594z"></path>
-                </symbol>
-            </defs>
-        </svg>
-        <header class="Header">
-            <div class="Header__inside">
-                <a class="Header__brand" href="https://www.northeastern.edu" title="Northeastern University" aria-label="Northeastern University" tabindex="0">
-                    <img class="Header__logo" src="/idp/images/global-logo.png" alt="Northeastern University">
-                </a>
-            </div><!-- /Header__inside -->
-        </header>
-<section class="SSO">
-    <div class="container">
-        <div class="content">
-          <div class="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
-          
-            <h3>Authentication with Duo is required for the requested service.</h3>
+<html lang="en"><head>
+		<title>My Evaluations - Eval25</title>
+		<meta charset="utf-8">
+		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+		
 
-            <noscript>The Duo service requires JavaScript.</noscript>          
-            <script src="/idp/js/Duo-Web-v2.min.js"></script>
-            <iframe id="duo_iframe" data-host="api-6daaf5ea.duosecurity.com" data-sig-request="TX|emhlbmcuYm98REkyVlVWVTZQWkxGOFBUVjY5RlJ8MTc0MzEwODgwMw==|1e5265bf46aa6e69b4af479190d8cd866a54871e:APP|emhlbmcuYm98REkyVlVWVTZQWkxGOFBUVjY5RlJ8MTc0MzExMjEwMw==|30f5d15b9fe1f8f11d0be173fcb51eb1d6d6063b" data-post-action="/idp/profile/SAML2/Redirect/SSO?execution=e1s3" frameborder="0" style="height: 450px;" src="https://api-6daaf5ea.duosecurity.com/frame/web/v1/auth?tx=TX|emhlbmcuYm98REkyVlVWVTZQWkxGOFBUVjY5RlJ8MTc0MzEwODgwMw==|1e5265bf46aa6e69b4af479190d8cd866a54871e&amp;parent=https%3A%2F%2Fneuidmsso.neu.edu%2Fidp%2Fprofile%2FSAML2%2FRedirect%2FSSO%3Fexecution%3De1s3&amp;v=2.6" cd_frame_id_="0fa1cc07ae263b2aae1a44599a790742">
-            </iframe>
-            <form id="duo_form" method="post">
-                <input type="hidden" name="_eventId" value="proceed">
-
-            </form>
-            
-            <h3 style="text-align: center">
-                <a href="/idp/profile/SAML2/Redirect/SSO?execution=e1s3&amp;_eventId=cancel">Cancel this Request</a>
-            </h3>
-          </div>
-          <div class="column two">
-                        <ul class="SSO__helpList">
-                            <li class="SSO__helpListItem SSO__helpListItem--expandable" tabindex="0">
-                                <a href="#">
-                                    <svg class="IconLinkIndicator" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                        <path d="M9.984 6l6 6-6 6-1.406-1.406 4.594-4.594-4.594-4.594z"></path>
-                                    </svg>
-                                    Need Help?
-                                </a>
-                                <p>
-                                    Need help with your account?
-                                </p>
-                                <ul>
-                                  <li>
-                                    <a href="https://northeastern.service-now.com/sp?id=kb_home" target="_blank">Search for answers in the self-service portal</a>
-                                  </li>
-                                  <li>
-                                    Contact the Service Desk at <a href="mailto:help@northeastern.edu" tabindex="0">help@northeastern.edu</a> or <a href="tel:6173734357">617.373.4357[HELP]</a>
-                                  </li>
-                                  <li>
-                                    Visit the InfoCommons in Snell Library.
-                                  </li>
-                                </ul>
-                            </li>
-                        </ul><!-- /SSO__helpList -->
-          </div>
-        </div>
-    </div>
-</section>
-        <footer id="footer" class="Footer">
-
-            <div class="Footer__locationContact">
-
-                  <p class="Footer__address">
-                                        <a href="//www.google.com/maps/place/360+Huntington+Ave,+Boston,+MA+02115/@42.339348,-71.0903674,17z/data=!3m1!4b1!4m5!3m4!1s0x89e37a185b1286ff:0x2c025c6d4b00cba2!8m2!3d42.339348!4d-71.0881734" title="View our Boston campus in Google Maps" aria-label="View our Boston campus in Google Maps" target="_blank">360 Huntington Ave., Boston, Massachusetts 02115</a> | <a href="tel:6173732000" title="Give us a call" aria-label="Give us a call">617.373.2000</a><a> | </a><a href="tel:6173733768" title="TTY users" aria-label="TTY users">TTY 617.373.3768</a> | <a href="/emergency-information" title="Read emergency information" aria-label="Read emergency information">Emergency Information</a>
-                  </p>
-
-                  <p class="Footer__copyright">
-                    © 2019 &nbsp;Northeastern University | <a href="http://my.northeastern.edu/" title="Access MyNortheastern" aria-label="Access MyNortheastern" target="_blank">MyNortheastern</a>
-                  </p>
-            </div><!-- /Footer__locationContact -->
-
-            <div class="Footer__social">
-              <p class="Footer__privacy"><a href="https://www.northeastern.edu/privacy-information" target="_blank">Privacy Policy</a></p>
-            </div><!-- /Footer__social -->
-
-        </footer>
-        <script src="/idp/js/custom.js"></script>    
-    
-
-</body></html>
+		<!-- This is used to make it work on mobile screens. -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="apple-mobile-web-app-capable" content="yes"> <!-- To make it like an App on iOS-->
+		
+		<script async="" src="https://www.google-analytics.com/analytics.js"></script><script type="text/javascript" src="/eval/ruxitagentjs_ICANVfqru_10309250310100759.js" data-dtconfig="app=b3e4b7260e3c8b7e|cuc=jvxq9jse|mel=100000|featureHash=ICANVfqru|dpvc=1|lastModification=1742918731702|tp=500,50,0|rdnt=1|uxrgce=1|agentUri=/eval/ruxitagentjs_ICANVfqru_10309250310100759.js|reportUrl=/eval/rb_bf51916wzk|rid=RID_1172387513|rpid=57060052|domain=applyweb.com"></script><script>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+			
+			ga('create', 'UA-1329542-14', 'auto');
+			ga('send', 'pageview');
+		</script>
+		
+		
+			<script>
+				ga('create', '', 'auto', 'institutionSpecific');
+				ga('institutionSpecific.send', 'pageview');
+			</script>
+		
+	</head>
+	<body>
+	
+	<!-- EVAL-5949: skip link for accessibility -->
+	<a class="eval-skip-link" href="javascript:document.getElementById('contentDiv').scrollIntoView();document.getElementById('contentDiv').focus()">Skip to main content</a>
+	
+	<main>
+		<div data-ng-app="studentHomeApp" data-ng-strict-di="">
+	<script src="/eval/resources/app/commons.js"></script></div></main></body></html>
